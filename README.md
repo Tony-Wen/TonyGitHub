@@ -4,6 +4,7 @@
     2、通过Terraform 编写创建虚拟机，虚拟网络等代码  
     3、通过github actions实现CI\CD  
     4、实现修改代码，页面直接变更  
+    5、搞懂github流程细节，输出笔记
 
 进阶  
     1、用python博客系统  
