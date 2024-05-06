@@ -41,12 +41,14 @@ jobs:  # 定义工作流中的任务
 
     # 为 Terraform 生成执行计划
     - name: Terraform Plan
-      run: terraform plan -input=false
+    # 如果当前的引用是 "main" 分支，并且触发事件是推送操作  
+      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+      run: terraform plan -input=false && terraform apply -auto-approve -input=false
 
     # 在推送到 "main" 分支时，根据 Terraform 配置文件构建或更改基础设施
     # 注意：建议在你的仓库中为 "Terraform Cloud" 设置一个必需的 "严格" 状态检查。有关 "严格" 必需状态检查的更多信息，请查看文档：https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
+    #- name: Terraform Apply
       # 如果当前的引用是 "main" 分支，并且触发事件是推送操作  
-      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+      #if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       # 则运行 'terraform apply' 命令，自动批准所有的更改，并且不接受输入
-      run: terraform apply -auto-approve -input=false
+     # run: terraform apply -auto-approve -input=false
