@@ -15,10 +15,12 @@ jobs:  # 定义工作流中的任务
     environment: production  # 设置任务的环境为 'production'
 
     env:
-      ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+      ARM_CLIENT_ID: "277c15f2-8d4d-4ae8-b9b8-5af15b20def7"
       ARM_CLIENT_SECRET: ${{secrets.AZURESECRET}}
-      ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-      ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+      ARM_SUBSCRIPTION_ID: "526f40bb-cd4c-422b-9acc-98ff37f9484b"
+      ARM_TENANT_ID: "112c9ed4-6357-45bb-bbe9-018fdb35e8ee"
+
+
     
     # 无论 GitHub Actions 的运行环境是 ubuntu-latest，macos-latest，还是 windows-latest，都使用 Bash shell
     defaults:
