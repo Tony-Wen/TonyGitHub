@@ -48,5 +48,5 @@ jobs:  # 定义工作流中的任务
     - name: Terraform Apply
       # 如果当前的引用是 "main" 分支，并且触发事件是推送操作  
       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-       则运行 'terraform apply' 命令，自动批准所有的更改，并且不接受输入
+      # 则运行 'terraform apply' 命令，自动批准所有的更改，并且不接受输入
       run: terraform apply -auto-approve -input=false
