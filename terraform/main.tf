@@ -3,7 +3,7 @@ terraform {
     required_providers {
         azurerm = {
             source  = "hashicorp/azurerm"  # Azure 资源提供商的源
-            version = "3.12.0"  # Azure 资源提供商的版本
+            version = "3.102.0"  # Azure 资源提供商的版本
         }
     }
 }
@@ -27,15 +27,15 @@ resource "azurerm_virtual_network" "example" {
     address_space       = ["10.0.0.0/16"]  # 虚拟网络的地址空间
 }
 
-/*
 # 定义一个 Azure 子网
 resource "azurerm_subnet" "example" {
-    name                 = "internal"  # 子网的名称
+    name                 = "subnet1oftony"  # 子网的名称
     resource_group_name  = azurerm_resource_group.example.name  # 子网所在的资源组
     virtual_network_name = azurerm_virtual_network.example.name  # 子网所在的虚拟网络
-    address_prefixes     = ["10.0.2.0/24"]  # 子网的地址前缀
+    address_prefixes     = ["10.0.0.0/24"]  # 子网的地址前缀
 }
 
+/*
 # 定义一个 Azure 网络接口
 resource "azurerm_network_interface" "example" {
     name                = "example-nic"  # 网络接口的名称

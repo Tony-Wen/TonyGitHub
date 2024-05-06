@@ -31,6 +31,10 @@ jobs:  # 定义工作流中的任务
       with:
         cli_config_credentials_token: ${{ secrets.I9VaKUdUyERrew_atlasv1_Q65JvE2xuxUyTWyIsHWgi3GwAY1JWrZInf9P1ult8Vy2QEDTyOk3lrpZYqeOLJaMG3k }}
 
+    # 进入 Terraform 配置文件所在的目录
+    - name: Terraform cd
+      run: cd terraform
+
     # 初始化一个新的或现有的 Terraform 工作目录，创建初始文件，加载任何远程状态，下载模块等
     - name: Terraform Init
       run: terraform init
