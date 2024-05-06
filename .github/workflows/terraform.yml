@@ -1,93 +1,52 @@
-# This workflow installs the latest version of Terraform CLI and configures the Terraform CLI configuration file
-# with an API token for Terraform Cloud (app.terraform.io). On pull request events, this workflow will run
-# `terraform init`, `terraform fmt`, and `terraform plan` (speculative plan via Terraform Cloud). On push events
-# to the "main" branch, `terraform apply` will be executed.
-#
-# Documentation for `hashicorp/setup-terraform` is located here: https://github.com/hashicorp/setup-terraform
-#
-# To use this workflow, you will need to complete the following setup steps.
-#
-# 1. Create a `main.tf` file in the root of this repository with the `remote` backend and one or more resources defined.
-#   Example `main.tf`:
-#     # The configuration for the `remote` backend.
-#     terraform {
-#       backend "remote" {
-#         # The name of your Terraform Cloud organization.
-#         organization = "example-organization"
-#
-#         # The name of the Terraform Cloud workspace to store Terraform state files in.
-#         workspaces {
-#           name = "example-workspace"
-#         }
-#       }
-#     }
-#
-#     # An example resource that does nothing.
-#     resource "null_resource" "example" {
-#       triggers = {
-#         value = "A example resource that does nothing!"
-#       }
-#     }
-#
-#
-# 2. Generate a Terraform Cloud user API token and store it as a GitHub secret (e.g. TF_API_TOKEN) on this repository.
-#   Documentation:
-#     - https://www.terraform.io/docs/cloud/users-teams-organizations/api-tokens.html
-#     - https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
-#
-# 3. Reference the GitHub secret in step using the `hashicorp/setup-terraform` GitHub Action.
-#   Example:
-#     - name: Setup Terraform
-#       uses: hashicorp/setup-terraform@v1
-#       with:
-#         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+name: 'Terraform'  # 定义工作流的名称为 'Terraform'
 
-name: 'Terraform'
-
-on:
-  push:
+#
+on:  # 定义触发工作流的 GitHub 事件
+  push:  # 当有新的推送到 "main" 分支时触发
     branches: [ "main" ]
-  pull_request:
+  pull_request:  # 当有新的 pull request 时触发
 
-permissions:
-  contents: read
+permissions:  # 定义工作流的权限
+  contents: read  # 只读取仓库内容的权限
 
-jobs:
-  terraform:
-    name: 'Terraform'
-    runs-on: ubuntu-latest
-    environment: production
+jobs:  # 定义工作流中的任务
+  terraform:  # 定义一个名为 'Terraform' 的任务
+    name: 'Terraform'  # 任务的名称为 'Terraform'
+    runs-on: ubuntu-latest  # 任务在最新的 Ubuntu 环境中运行
+    environment: production  # 设置任务的环境为 'production'
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    # 无论 GitHub Actions 的运行环境是 ubuntu-latest，macos-latest，还是 windows-latest，都使用 Bash shell
     defaults:
       run:
         shell: bash
 
-    steps:
-    # Checkout the repository to the GitHub Actions runner
+    steps:  # 定义任务中的步骤
+    # 将仓库的代码检出到 GitHub Actions 的运行器
     - name: Checkout
       uses: actions/checkout@v4
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    # 安装最新版本的 Terraform CLI，并使用 Terraform Cloud 用户 API 令牌配置 Terraform CLI 配置文件
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+        cli_config_credentials_token: ${{ secrets.I9VaKUdUyERrew_atlasv1_Q65JvE2xuxUyTWyIsHWgi3GwAY1JWrZInf9P1ult8Vy2QEDTyOk3lrpZYqeOLJaMG3k }}
 
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    # 初始化一个新的或现有的 Terraform 工作目录，创建初始文件，加载任何远程状态，下载模块等
     - name: Terraform Init
       run: terraform init
 
-    # Checks that all Terraform configuration files adhere to a canonical format
+    # 检查所有 Terraform 配置文件是否符合规范格式
     - name: Terraform Format
       run: terraform fmt -check
 
-    # Generates an execution plan for Terraform
+    # 为 Terraform 生成执行计划
     - name: Terraform Plan
       run: terraform plan -input=false
 
-      # On push to "main", build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+    # 在推送到 "main" 分支时，根据 Terraform 配置文件构建或更改基础设施
+    # 注意：建议在你的仓库中为 "Terraform Cloud" 设置一个必需的 "严格" 状态检查。有关 "严格" 必需状态检查的更多信息，请查看文档：https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
+      # 如果当前的引用是 "main" 分支，并且触发事件是推送操作  
       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+      # 则运行 'terraform apply' 命令，自动批准所有的更改，并且不接受输入
       run: terraform apply -auto-approve -input=false

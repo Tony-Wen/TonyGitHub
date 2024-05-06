@@ -15,19 +15,19 @@ provider "azurerm" {
 
 # 定义一个 Azure 资源组
 resource "azurerm_resource_group" "example" {
-    name     = "exampleRG-Tony"  # 资源组的名称
+    name     = "exampleRG-TonyWen"  # 资源组的名称
     location = "West Europe"  # 资源组的位置
 }
 
-/*
 # 定义一个 Azure 虚拟网络
 resource "azurerm_virtual_network" "example" {
-    name                = "example-network"  # 虚拟网络的名称
+    name                = "example-networkofTony"  # 虚拟网络的名称
     resource_group_name = azurerm_resource_group.example.name  # 虚拟网络所在的资源组
     location            = azurerm_resource_group.example.location  # 虚拟网络的位置
     address_space       = ["10.0.0.0/16"]  # 虚拟网络的地址空间
 }
 
+/*
 # 定义一个 Azure 子网
 resource "azurerm_subnet" "example" {
     name                 = "internal"  # 子网的名称
