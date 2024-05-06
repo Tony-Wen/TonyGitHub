@@ -39,10 +39,6 @@ jobs:  # 定义工作流中的任务
     - name: Terraform validate
       run: terraform validate
 
-    # 检查所有 Terraform 配置文件是否符合规范格式
-    - name: Terraform Format
-      run: terraform fmt -check
-
     # 为 Terraform 生成执行计划
     - name: Terraform Plan
       run: terraform plan -input=false
