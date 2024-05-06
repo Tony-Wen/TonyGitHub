@@ -14,6 +14,12 @@ jobs:  # 定义工作流中的任务
     runs-on: ubuntu-latest  # 任务在最新的 Ubuntu 环境中运行
     environment: production  # 设置任务的环境为 'production'
 
+    env:
+      ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.AZURESECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+    
     # 无论 GitHub Actions 的运行环境是 ubuntu-latest，macos-latest，还是 windows-latest，都使用 Bash shell
     defaults:
       run:
@@ -22,6 +28,8 @@ jobs:  # 定义工作流中的任务
 
     steps:  # 定义任务中的步骤
     # 将仓库的代码检出到 GitHub Actions 的运行器
+
+
     - name: Checkout
       uses: actions/checkout@v4
 
