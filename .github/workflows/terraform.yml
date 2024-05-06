@@ -18,6 +18,7 @@ jobs:  # 定义工作流中的任务
     defaults:
       run:
         shell: bash
+        working-directory: terraform
 
     steps:  # 定义任务中的步骤
     # 将仓库的代码检出到 GitHub Actions 的运行器
@@ -29,10 +30,6 @@ jobs:  # 定义工作流中的任务
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.I9VaKUdUyERrew_atlasv1_Q65JvE2xuxUyTWyIsHWgi3GwAY1JWrZInf9P1ult8Vy2QEDTyOk3lrpZYqeOLJaMG3k }}
-
-    # 查看进入Terraform文件夹，并查看文件
-    - name: shell cd and ls
-      run: cd terraform && ls
 
     # 初始化一个新的或现有的 Terraform 工作目录，创建初始文件，加载任何远程状态，下载模块等
     - name: Terraform Init
