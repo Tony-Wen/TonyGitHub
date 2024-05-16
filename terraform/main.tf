@@ -15,7 +15,7 @@ provider "azurerm" {
 
 # 定义一个 Azure 资源组
 resource "azurerm_resource_group" "example" {
-    name     = "exampleRG-TonyWen"  # 资源组的名称
+    name     = "exampleRG-TonyWen111"  # 资源组的名称
     location = "West Europe"  # 资源组的位置
 }
 
